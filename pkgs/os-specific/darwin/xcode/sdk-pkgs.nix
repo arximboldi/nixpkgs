@@ -46,6 +46,10 @@ rec {
       echo "-platform_version ios-simulator ${minSdkVersion} ${sdk.version}" >> $out/nix-support/libc-ldflags
     '' + lib.optionalString (sdk.platform == "iPhoneOS") ''
       echo "-platform_version ios ${minSdkVersion} ${sdk.version}" >> $out/nix-support/libc-ldflags
+    '' + lib.optionalString (sdk.platform == "AppleTVOS") ''
+      echo "-platform_version tvos ${minSdkVersion} ${sdk.version}" >> $out/nix-support/libc-ldflags
+    '' + lib.optionalString (sdk.platform == "AppleTVSimulator") ''
+      echo "-platform_version tvos-simulator ${minSdkVersion} ${sdk.version}" >> $out/nix-support/libc-ldflags
     '';
   };
 
@@ -70,6 +74,10 @@ rec {
       echo "-mios-simulator-version-min=${minSdkVersion}" >> $out/nix-support/cc-cflags
     '' + lib.optionalString (sdk.platform == "iPhoneOS") ''
       echo "-miphoneos-version-min=${minSdkVersion}" >> $out/nix-support/cc-cflags
+    '' + lib.optionalString (sdk.platform == "AppleTVSimulator") ''
+      echo "-mappletvsimulator-version-min=${minSdkVersion}" >> $out/nix-support/cc-cflags
+    '' + lib.optionalString (sdk.platform == "AppleTVOS") ''
+      echo "-mappletvos-version-min=${minSdkVersion}" >> $out/nix-support/cc-cflags
     '';
   }) // {
     inherit sdk;
